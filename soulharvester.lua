@@ -1,6 +1,6 @@
-local lookingforStyle = "Don Lorenzo"
+local lookingforFlow = "Soul Harvester"
 local rollSlot = "Slot1"
-local rollLuckySpin = false
+local rollLuckySpin = true
 
 repeat wait()
 until game:IsLoaded() and game:FindFirstChild("CoreGui") and pcall(function() return game.CoreGui end)
@@ -29,9 +29,9 @@ end)
 local Data
 repeat wait(1)
     Data = game:GetService("ReplicatedStorage").Data:InvokeServer()
-until Data and Data.Spins and Data.LuckySpins
+until Data and Data.FlowSpins and Data.LuckyFlowSpins
 
-local spinAmount = rollLuckySpin and Data.LuckySpins or Data.Spins
+local spinAmount = rollLuckySpin and Data.LuckyFlowSpins or Data.FlowSpins
 if spinAmount == 0 then
     print("No spins available")
     return
@@ -40,11 +40,11 @@ end
 game:GetService("ReplicatedStorage").Loaded:FireServer()
 wait(1)
 
-if plr.PlayerStats.Style.Value == lookingforStyle then
-    return print("Style already matched (" .. lookingforStyle .. ")")
+if plr.PlayerStats.Flow.Value == lookingforFlow then
+    return print("Flow already matched (" .. lookingforFlow .. ")")
 end
 
-game:GetService("ReplicatedStorage").Packages.Knit.Services.StyleService.RE.Slot:FireServer(rollSlot)
+game:GetService("ReplicatedStorage").Packages.Knit.Services.FlowService.RE.Slot:FireServer(rollSlot)
 wait(1)
 
 print("Freezing data")
@@ -56,21 +56,21 @@ game:GetService("ReplicatedStorage").Packages.Knit.Services.CustomizationService
 
 wait(2)
 
-game:GetService("ReplicatedStorage").Packages.Knit.Services.StyleService.RF.SetTargetRollStyle:InvokeServer(lookingforStyle)
+game:GetService("ReplicatedStorage").Packages.Knit.Services.FlowService.RF.SetTargetRollStyle:InvokeServer(lookingforFlow)
 
 for i = 1, spinAmount do
-    game:GetService("ReplicatedStorage").Packages.Knit.Services.StyleService.RE.Spin:FireServer(rollLuckySpin)
+    game:GetService("ReplicatedStorage").Packages.Knit.Services.FlowService.RE.Spin:FireServer(rollLuckySpin)
     wait(1)
-    print("Rolled: " .. plr.PlayerStats.Style.Value)
-    if plr.PlayerStats.Style.Value == lookingforStyle then
+    print("Rolled: " .. plr.PlayerStats.Flow.Value)
+    if plr.PlayerStats.Flow.Value == lookingforFlow then
         break
     end
 end
-if plr.PlayerStats.Style.Value ~= lookingforStyle then
+if plr.PlayerStats.Flow.Value ~= lookingforFlow then
     print("Out of Spin, rejoining")
     game:GetService("TeleportService"):Teleport(game.PlaceId, plr)
 else
-    print("Style matched (" .. lookingforStyle .. "), saving data")
+    print("Flow matched (" .. lookingforFlow .. "), saving data")
     game:GetService("ReplicatedStorage").Packages.Knit.Services.CustomizationService.RE.Customize:FireServer(unpack({
         [1] = "Emotes",
         [2] = "Default",
