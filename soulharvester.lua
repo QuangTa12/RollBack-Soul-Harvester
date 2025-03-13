@@ -1,6 +1,6 @@
 local lookingforStyle = "Don Lorenzo"
 local rollSlot = "Slot1"
-local rollLuckySpin = true
+local rollLuckySpin = false
 
 repeat wait()
 until game:IsLoaded() and game:FindFirstChild("CoreGui") and pcall(function() return game.CoreGui end)
